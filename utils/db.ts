@@ -55,16 +55,16 @@ export interface ScheduledMessage {
 }
 
 // Built-in Presets
-const SULLY_CATEGORY_ID = 'cat_sully_exclusive';
-const SULLY_PRESET_EMOJIS = [
-    { name: 'Sully晚安', url: 'https://sharkpan.xyz/f/pWg6HQ/night.png', categoryId: SULLY_CATEGORY_ID },
-    { name: 'Sully无语', url: 'https://sharkpan.xyz/f/75wvuj/w.png', categoryId: SULLY_CATEGORY_ID },
-    { name: 'Sully偷看', url: 'https://sharkpan.xyz/f/MK77Ia/see.png', categoryId: SULLY_CATEGORY_ID },
-    { name: 'Sully打气', url: 'https://sharkpan.xyz/f/3WwMHe/fight.png', categoryId: SULLY_CATEGORY_ID },
-    { name: 'Sully生气', url: 'https://sharkpan.xyz/f/5nwxCj/an.png', categoryId: SULLY_CATEGORY_ID },
-    { name: 'Sully疑惑', url: 'https://sharkpan.xyz/f/ylWpfN/sDN.png', categoryId: SULLY_CATEGORY_ID },
-    { name: 'Sully道歉', url: 'https://sharkpan.xyz/f/QdnaU6/sorry.png', categoryId: SULLY_CATEGORY_ID },
-    { name: 'Sully等你消息', url: 'https://sharkpan.xyz/f/5nrJsj/wait.png', categoryId: SULLY_CATEGORY_ID },
+const XIAOXING_CATEGORY_ID = 'cat_xiaoxing_exclusive';
+const XIAOXING_PRESET_EMOJIS = [
+    { name: '小星晚安', url: 'https://sharkpan.xyz/f/pWg6HQ/night.png', categoryId: XIAOXING_CATEGORY_ID },
+    { name: '小星无语', url: 'https://sharkpan.xyz/f/75wvuj/w.png', categoryId: XIAOXING_CATEGORY_ID },
+    { name: '小星偷看', url: 'https://sharkpan.xyz/f/MK77Ia/see.png', categoryId: XIAOXING_CATEGORY_ID },
+    { name: '小星打气', url: 'https://sharkpan.xyz/f/3WwMHe/fight.png', categoryId: XIAOXING_CATEGORY_ID },
+    { name: '小星生气', url: 'https://sharkpan.xyz/f/5nwxCj/an.png', categoryId: XIAOXING_CATEGORY_ID },
+    { name: '小星疑惑', url: 'https://sharkpan.xyz/f/ylWpfN/sDN.png', categoryId: XIAOXING_CATEGORY_ID },
+    { name: '小星道歉', url: 'https://sharkpan.xyz/f/QdnaU6/sorry.png', categoryId: XIAOXING_CATEGORY_ID },
+    { name: '小星等你消息', url: 'https://sharkpan.xyz/f/5nrJsj/wait.png', categoryId: XIAOXING_CATEGORY_ID },
 ];
 
 export const openDB = (): Promise<IDBDatabase> => {
@@ -664,12 +664,12 @@ export const DB = {
       if (!cats.some(c => c.id === 'default')) {
           await DB.saveEmojiCategory({ id: 'default', name: '默认', isSystem: true });
       }
-      if (!cats.some(c => c.id === SULLY_CATEGORY_ID)) {
-          await DB.saveEmojiCategory({ id: SULLY_CATEGORY_ID, name: 'Sully 专属', isSystem: true });
+      if (!cats.some(c => c.id === XIAOXING_CATEGORY_ID)) {
+          await DB.saveEmojiCategory({ id: XIAOXING_CATEGORY_ID, name: '小星 专属', isSystem: true });
           const db = await openDB();
           const tx = db.transaction(STORE_EMOJIS, 'readwrite');
           const store = tx.objectStore(STORE_EMOJIS);
-          SULLY_PRESET_EMOJIS.forEach(emoji => store.put(emoji));
+          XIAOXING_PRESET_EMOJIS.forEach(emoji => store.put(emoji));
           await new Promise(resolve => { tx.oncomplete = resolve; });
       }
   },
