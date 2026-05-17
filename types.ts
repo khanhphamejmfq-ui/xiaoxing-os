@@ -1043,7 +1043,7 @@ export interface GroupProfile {
 
 export interface CharacterExportData extends Omit<CharacterProfile, 'id' | 'memories' | 'refinedMemories' | 'activeMemoryMonths' | 'impression'> {
     version: number;
-    type: 'sully_character_card';
+    type: 'xiaoxing_character_card';
     embeddedTheme?: ChatTheme;
 }
 
@@ -1670,7 +1670,7 @@ export interface FullBackupData {
     browserConfig?: { braveKey?: string; useRealSearch?: boolean };
     bm25Mode?: string;
     lastActiveCharId?: string;
-    eventNotifFlags?: Record<string, string>;  // sullyos_* 事件通知标记
+    eventNotifFlags?: Record<string, string>;  // xiaoxingos_* 事件通知标记
 }
 
 // --- CLOUD BACKUP TYPES ---
@@ -1689,7 +1689,7 @@ export interface CloudBackupConfig {
     remotePath: string;         // e.g. /SullyBackup/
 
     // GitHub Releases — uses a Personal Access Token. Owner is resolved from
-    // GET /user during connect; repo defaults to 'sully-backup' (private).
+    // GET /user during connect; repo defaults to 'xiaoxing-backup' (private).
     githubToken?: string;
     githubOwner?: string;
     githubRepo?: string;
