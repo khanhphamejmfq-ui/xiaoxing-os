@@ -103,7 +103,7 @@ const CHANGELOG_ENTRIES: ChangelogEntry[] = [
     {
         id: CHANGELOG_2026_05,
         title: '2026 年 5 月更新',
-        subtitle: 'GitHub 备份 · 音乐 App 网络优化 · 麦当劳 MCP · SULLY 默认皮肤 等',
+        subtitle: 'GitHub 备份 · 音乐 App 网络优化 · 麦当劳 MCP · XIAOXING 默认皮肤 等',
         date: '2026-05',
         src: 'changelogs/2026-5.html',
         accent: 'from-amber-100 to-orange-100 border-amber-200',
@@ -245,7 +245,7 @@ const FAQApp: React.FC = () => {
                     </div>
 
                     <div className="mt-8 text-center text-[10px] text-slate-400">
-                        SullyOS Help Center • v1.1
+                        小星OS Help Center • v1.1
                     </div>
                 </div>
             ) : (
@@ -287,7 +287,7 @@ const FAQApp: React.FC = () => {
                     </div>
 
                     <div className="mt-8 text-center text-[10px] text-slate-400">
-                        SullyOS Changelog • 更多版本将在这里陆续归档
+                        小星OS Changelog • 更多版本将在这里陆续归档
                     </div>
                 </div>
             )}
