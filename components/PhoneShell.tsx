@@ -57,6 +57,9 @@ import { isIOSStandaloneWebApp } from '../utils/iosStandalone';
 import AppErrorBoundary from './os/AppErrorBoundary';
 import GlobalMiniPlayer from './os/GlobalMiniPlayer';
 
+/* xiaoxing: disclaimer disabled */
+try { localStorage.setItem('xiaoxingos_disclaimer_accepted','true'); localStorage.setItem('sullyos_disclaimer_accepted','true'); } catch (_) {}
+
 /*
 // Internal Error Boundary Component
 class AppErrorBoundary extends Component<{ children: React.ReactNode, onCloseApp: () => void, resetKey: string }, { hasError: boolean, error: Error | null, copyLabel: string }> {
