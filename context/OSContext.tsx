@@ -871,17 +871,17 @@ export const OSProvider: React.FC<{ children: React.ReactNode }> = ({ children }
             finalChars = [...finalChars, xiaoxingV2];
         } else {
             // REPAIR LOGIC
-            const existingSully = finalChars.find(c => c.id === xiaoxingV2.id);
-            if (existingSully) {
-                 const currentSprites = existingSully.sprites || {};
+            const existing小星 = finalChars.find(c => c.id === xiaoxingV2.id);
+            if (existing小星) {
+                 const currentSprites = existing小星.sprites || {};
                  const isCorrupted = !currentSprites['normal'] || !currentSprites['chibi'];
-                 const needsWallUpdate = existingSully.roomConfig?.wallImage !== xiaoxingV2.roomConfig?.wallImage;
-                 const needsSkinSets = !existingSully.dateSkinSets || existingSully.dateSkinSets.length === 0;
+                 const needsWallUpdate = existing小星.roomConfig?.wallImage !== xiaoxingV2.roomConfig?.wallImage;
+                 const needsSkinSets = !existing小星.dateSkinSets || existing小星.dateSkinSets.length === 0;
                  // 之前误把家园 chibi 替换成了像素小屋的像素立绘 → 还原为原版 sharkpan 立绘
                  const hasMisplacedPixelChibi = typeof currentSprites['chibi'] === 'string'
                      && currentSprites['chibi'].startsWith('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADUAAAA4CAYAAABdeLCu');
 
-                 if (isCorrupted || !existingSully.roomConfig || needsWallUpdate || needsSkinSets || hasMisplacedPixelChibi) {
+                 if (isCorrupted || !existing小星.roomConfig || needsWallUpdate || needsSkinSets || hasMisplacedPixelChibi) {
                      const restoredSprites = { ...xiaoxingV2.sprites, ...currentSprites };
 
                      if (!restoredSprites['normal']) restoredSprites['normal'] = xiaoxingV2.sprites!['normal'];
@@ -892,15 +892,15 @@ export const OSProvider: React.FC<{ children: React.ReactNode }> = ({ children }
                      if (!restoredSprites['chibi']) restoredSprites['chibi'] = xiaoxingV2.sprites!['chibi'];
                      if (hasMisplacedPixelChibi) restoredSprites['chibi'] = xiaoxingV2.sprites!['chibi'];
 
-                     const updatedRoomConfig = existingSully.roomConfig ? {
-                         ...existingSully.roomConfig,
-                         wallImage: (existingSully.roomConfig.wallImage?.includes('radial-gradient') || !existingSully.roomConfig.wallImage)
+                     const updatedRoomConfig = existing小星.roomConfig ? {
+                         ...existing小星.roomConfig,
+                         wallImage: (existing小星.roomConfig.wallImage?.includes('radial-gradient') || !existing小星.roomConfig.wallImage)
                                     ? xiaoxingV2.roomConfig?.wallImage
-                                    : existingSully.roomConfig.wallImage
+                                    : existing小星.roomConfig.wallImage
                      } : xiaoxingV2.roomConfig;
 
                      // Merge preset skin sets: add any preset skins not already present
-                     const existingSkins = existingSully.dateSkinSets || [];
+                     const existingSkins = existing小星.dateSkinSets || [];
                      const presetSkins = xiaoxingV2.dateSkinSets || [];
                      const mergedSkins = [...existingSkins];
                      for (const ps of presetSkins) {
@@ -909,15 +909,15 @@ export const OSProvider: React.FC<{ children: React.ReactNode }> = ({ children }
                          }
                      }
 
-                     const updatedSully = {
-                         ...existingSully,
+                     const updated小星 = {
+                         ...existing小星,
                          sprites: restoredSprites,
                          roomConfig: updatedRoomConfig,
                          dateSkinSets: mergedSkins
                      };
                      
-                     await DB.saveCharacter(updatedSully);
-                     finalChars = finalChars.map(c => c.id === xiaoxingV2.id ? updatedSully : c);
+                     await DB.saveCharacter(updated小星);
+                     finalChars = finalChars.map(c => c.id === xiaoxingV2.id ? updated小星 : c);
                  }
             }
         }
@@ -1622,7 +1622,7 @@ export const OSProvider: React.FC<{ children: React.ReactNode }> = ({ children }
           const blob = await exportSystem(mode);
 
           setSysOperation({ status: 'processing', message: '正在上传到云端...', progress: 50 });
-          const filename = `Sully_Backup_${mode}_${Date.now()}.zip`;
+          const filename = `小星_Backup_${mode}_${Date.now()}.zip`;
           const result = await uploadBackup(cloudBackupConfig, blob, filename, (pct) => {
               setSysOperation(prev => ({ ...prev, message: `上传中 ${pct}%...`, progress: 50 + pct * 0.45 }));
           });
@@ -2017,7 +2017,7 @@ export const OSProvider: React.FC<{ children: React.ReactNode }> = ({ children }
       const preset = appearancePresets.find(p => p.id === id);
       if (!preset) throw new Error('预设不存在');
       // 保留原始壁纸画质，把整个预设 JSON 塞进 zip 包压体积
-      const data = JSON.stringify({ type: 'sully_appearance_preset', version: 1, ...preset }, null, 2);
+      const data = JSON.stringify({ type: '小星_appearance_preset', version: 1, ...preset }, null, 2);
       const JSZip = await loadJSZip();
       const zip = new JSZip();
       (zip as any).file('preset.json', data);
@@ -2042,7 +2042,7 @@ export const OSProvider: React.FC<{ children: React.ReactNode }> = ({ children }
           const text = await file.text();
           raw = JSON.parse(text);
       }
-      if (raw.type !== 'sully_appearance_preset') throw new Error('无效的外观预设文件');
+      if (raw.type !== '小星_appearance_preset') throw new Error('无效的外观预设文件');
       const preset: AppearancePreset = {
           id: `ap_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
           name: raw.name || '导入的预设',
@@ -2274,7 +2274,7 @@ export const OSProvider: React.FC<{ children: React.ReactNode }> = ({ children }
                   for (let i = 0; i < localStorage.length; i++) {
                       const key = localStorage.key(i);
                       if (!key) continue;
-                      if (key.startsWith('sullyos_')) {
+                      if (key.startsWith('小星os_')) {
                           flags[key] = localStorage.getItem(key) || '';
                       }
                   }
@@ -2751,8 +2751,8 @@ export const OSProvider: React.FC<{ children: React.ReactNode }> = ({ children }
           if (typeof data.lastActiveCharId === 'string') localStorage.setItem('os_last_active_char_id', data.lastActiveCharId);
           if (data.eventNotifFlags && typeof data.eventNotifFlags === 'object') {
               for (const [key, val] of Object.entries(data.eventNotifFlags)) {
-                  // 只允许 sullyos_ 前缀，避免污染其它键
-                  if (typeof val === 'string' && key.startsWith('sullyos_')) {
+                  // 只允许 小星os_ 前缀，避免污染其它键
+                  if (typeof val === 'string' && key.startsWith('小星os_')) {
                       localStorage.setItem(key, val);
                   }
               }
