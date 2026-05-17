@@ -450,7 +450,7 @@ Personality: 软萌、粘人、爱撒娇、活泼、温柔
 // Fallback for factory reset (empty db)
 const initialCharacter = xiaoxingV2;
 
-const sanitizeXiaoxingCharacters = (chars: CharacterProfile[]): CharacterProfile[] => {
+const onlyXiaoxingCharacters = (chars: CharacterProfile[]): CharacterProfile[] => {
   const cleaned = (Array.isArray(chars) ? chars : []).filter((c) => {
     const id = String(c?.id || '').toLowerCase();
     const name = String(c?.name || '').toLowerCase();
@@ -461,6 +461,28 @@ const sanitizeXiaoxingCharacters = (chars: CharacterProfile[]): CharacterProfile
 };
 
 const OSContext = createContext<OSContextType | undefined>(undefined);
+
+
+const purgeLegacySullyCharacter = (value: any): any => {
+  const isOld = (c: any) => {
+    const id = String(c?.id || c?._id || '').toLowerCase();
+    const name = String(c?.name || '').toLowerCase();
+    const desc = String(c?.description || '');
+    return id.includes('sully') || name === 'sully' || name.includes('sully') || desc.includes('电波系黑客猫猫') || desc.includes('AI助理');
+  };
+  if (Array.isArray(value)) return value.filter((c) => !isOld(c)).map((c) => purgeLegacySullyCharacter(c));
+  if (value && typeof value === 'object') {
+    const copy: any = { ...value };
+    Object.keys(copy).forEach((k) => { copy[k] = purgeLegacySullyCharacter(copy[k]); });
+    return copy;
+  }
+  return value;
+};
+const onlyXiaoxingCharacters = (chars: CharacterProfile[]): CharacterProfile[] => {
+  const arr = purgeLegacySullyCharacter(Array.isArray(chars) ? chars : []) as CharacterProfile[];
+  const has = arr.some((c) => c.id === 'preset-xiaoxing-v2' || c.name === '小星');
+  return has ? arr : [xiaoxingV2, ...arr];
+};
 
 export const OSProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   // ... (State declarations same as before) ...
@@ -526,6 +548,11 @@ export const OSProvider: React.FC<{ children: React.ReactNode }> = ({ children }
   }, []);
 
   const [characters, setCharacters] = useState<CharacterProfile[]>([]);
+
+  // legacy-sully-purge-effect
+  React.useEffect(() => {
+    setCharacters((prev) => onlyXiaoxingCharacters(prev));
+  }, []);
   const [activeCharacterId, setActiveCharacterId] = useState<string>('');
 
   // 刷新后能恢复"上一次聊的角色"：所有调用方（聊天切换/通知 onclick/记忆宫殿 handleSwitchChar）
