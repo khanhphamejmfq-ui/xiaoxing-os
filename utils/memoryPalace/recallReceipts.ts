@@ -48,7 +48,7 @@ function writeAll(charId: string, receipts: RecallReceipt[]): void {
     try {
         localStorage.setItem(storageKey(charId), JSON.stringify(receipts));
     } catch (e) {
-        // localStorage 写满或无权限：无声降级，回执只是辅助手段
+        // localStorage 写满或无权限：无声降级，回执只是辅小星段
         console.warn(`[RecallReceipts] write failed for ${charId}:`, e);
     }
 }
