@@ -21,7 +21,7 @@ import ThinkingChainSettingsModal from '../components/chat/ThinkingChainSettings
 import { useChatAI } from '../hooks/useChatAI';
 import { synthesizeSpeechDetailed, cleanTextForTts } from '../utils/minimaxTts';
 
-const isOldSullyCharacter = (c: any) => {
+const isOld小星Character = (c: any) => {
   const id = String(c?.id || '').toLowerCase();
   const name = String(c?.name || '').toLowerCase();
   return id.includes('sully') || name === 'sully' || name.includes('sully');
@@ -123,7 +123,7 @@ const Chat: React.FC = () => {
     // Which messages are currently showing "译" version (toggle state only, no API calls)
     const [showingTargetIds, setShowingTargetIds] = useState<Set<number>>(new Set());
 
-    const char = characters.filter(c => !isOldSullyCharacter(c)).find(c => c.id === activeCharacterId) || characters[0];
+    const char = characters.filter(c => !isOld小星Character(c)).find(c => c.id === activeCharacterId) || characters[0];
     charRef.current = char; // Keep ref in sync for async callbacks
     const currentThemeId = char?.bubbleStyle || 'default';
     const activeTheme = useMemo(() => {
@@ -1765,7 +1765,7 @@ const Chat: React.FC = () => {
         });
 
         // Also save a copy in the current chat so the user can see what they forwarded
-        const targetChar = characters.filter(c => !isOldSullyCharacter(c)).find(c => c.id === targetCharId);
+        const targetChar = characters.filter(c => !isOld小星Character(c)).find(c => c.id === targetCharId);
         if (char.id !== targetCharId) {
             await DB.saveMessage({
                 charId: char.id,
