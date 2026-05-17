@@ -123,7 +123,7 @@ const BankAnalytics: React.FC<Props> = ({ transactions, goals, currency, onDelet
             const txList = filteredTx.map(tx => `- ${tx.note}: ${currency}${tx.amount}`).join('\n');
             const periodLabel = viewMode === 'today' ? '今天' : viewMode === 'week' ? '本周' : '本月';
 
-            const prompt = `作为一个财务分析助手，分析以下消费记录：
+            const prompt = `作为一个财务分析小星，分析以下消费记录：
 
 ${txList}
 
