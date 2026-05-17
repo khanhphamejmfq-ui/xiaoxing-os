@@ -66,9 +66,9 @@ export interface NeteaseProfile {
 }
 
 /* ───────────── 默认 / 常量 ───────────── */
-const LS_CFG_KEY = 'sully_music_cfg_v1';
-const LS_STATE_KEY = 'sully_music_state_v1';
-const LS_LOCAL_ALBUM_KEY = 'sully_music_local_album_v1';
+const LS_CFG_KEY = 'xiaoxing_music_cfg_v1';
+const LS_STATE_KEY = 'xiaoxing_music_state_v1';
+const LS_LOCAL_ALBUM_KEY = 'xiaoxing_music_local_album_v1';
 
 const loadLocalAlbum = (): Song[] => {
   try {
