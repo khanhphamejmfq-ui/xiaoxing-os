@@ -187,6 +187,80 @@
 </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/index.tsx"></script>
+    
+    <script>
+      // XiaoxingOS hard cleanup: remove legacy Sully character from old local data before React boots.
+      (function(){
+        var OLD_RE = /sully|preset-sully|电波系黑客猫猫|AI助理/i;
+        function scrubValue(v){
+          if (typeof v !== 'string') return v;
+          if (!OLD_RE.test(v)) return v;
+          try {
+            var data = JSON.parse(v);
+            var changed = false;
+            function walk(x){
+              if (Array.isArray(x)) {
+                for (var i=x.length-1;i>=0;i--) {
+                  var it=x[i] || {};
+                  var id=String(it.id||'').toLowerCase();
+                  var name=String(it.name||'').toLowerCase();
+                  var desc=String(it.description||'');
+                  if (id.indexOf('sully')>=0 || name==='sully' || name.indexOf('sully')>=0 || desc.indexOf('电波系黑客猫猫')>=0 || desc.indexOf('AI助理')>=0) { x.splice(i,1); changed=true; continue; }
+                  walk(it);
+                }
+              } else if (x && typeof x==='object') {
+                Object.keys(x).forEach(function(k){ walk(x[k]); });
+              }
+            }
+            walk(data);
+            return changed ? JSON.stringify(data) : v;
+          } catch(e) { return v; }
+        }
+        try {
+          for (var i=localStorage.length-1;i>=0;i--) {
+            var k=localStorage.key(i); var v=localStorage.getItem(k);
+            if (OLD_RE.test(k) || OLD_RE.test(v||'')) {
+              var nv=scrubValue(v);
+              if (nv!==v) localStorage.setItem(k,nv);
+              if (/sully/i.test(k) && nv===v) localStorage.removeItem(k);
+            }
+          }
+        } catch(e) {}
+        try {
+          if (window.indexedDB && indexedDB.databases) {
+            indexedDB.databases().then(function(dbs){
+              dbs.forEach(function(info){
+                if (!info || !info.name) return;
+                var open=indexedDB.open(info.name);
+                open.onsuccess=function(){
+                  var db=open.result;
+                  Array.prototype.slice.call(db.objectStoreNames).forEach(function(storeName){
+                    try {
+                      var tx=db.transaction(storeName,'readwrite');
+                      var store=tx.objectStore(storeName);
+                      var cursor=store.openCursor();
+                      cursor.onsuccess=function(ev){
+                        var cur=ev.target.result; if(!cur) return;
+                        var val=cur.value || {};
+                        var raw=''; try{ raw=JSON.stringify(val); }catch(e){}
+                        var id=String(val.id||val._id||'').toLowerCase();
+                        var name=String(val.name||val.title||'').toLowerCase();
+                        var desc=String(val.description||'');
+                        if (id.indexOf('sully')>=0 || name==='sully' || name.indexOf('sully')>=0 || desc.indexOf('电波系黑客猫猫')>=0 || desc.indexOf('AI助理')>=0 || /preset-sully-v2/i.test(raw)) {
+                          cur.delete();
+                        }
+                        cur.continue();
+                      };
+                    } catch(e) {}
+                  });
+                };
+              });
+            }).catch(function(){});
+          }
+        } catch(e) {}
+      })();
+    </script>
+
+  <script type="module" src="/index.tsx"></script>
   </body>
 </html>
