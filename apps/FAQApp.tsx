@@ -82,7 +82,7 @@ const FAQ_DATA = [
     }
 ];
 
-interface ChangelogEntry {
+interface Entry {
     id: string;
     title: string;
     subtitle: string;
@@ -91,7 +91,7 @@ interface ChangelogEntry {
     accent: string;
 }
 
-const CHANGELOG_ENTRIES: ChangelogEntry[] = [
+const CHANGELOG_ENTRIES: Entry[] = [
     {
         id: CHANGELOG_2026_05_10,
         title: '2026 年 5 月 10 日 · 小更新',
@@ -123,7 +123,7 @@ type Tab = 'faq' | 'changelog';
 const FAQApp: React.FC = () => {
     const { closeApp } = useOS();
     const [tab, setTab] = useState<Tab>('faq');
-    const [activeChangelog, setActiveChangelog] = useState<ChangelogEntry | null>(null);
+    const [active, setActive] = useState<Entry | null>(null);
 
     useEffect(() => {
         try {
@@ -133,23 +133,23 @@ const FAQApp: React.FC = () => {
                 const entry = CHANGELOG_ENTRIES.find(e => e.id === target);
                 if (entry) {
                     setTab('changelog');
-                    setActiveChangelog(entry);
+                    setActive(entry);
                 }
             }
         } catch { /* ignore */ }
     }, []);
 
     const handleBack = () => {
-        if (activeChangelog) {
-            setActiveChangelog(null);
+        if (active) {
+            setActive(null);
             return;
         }
         closeApp();
     };
 
-    const headerTitle = activeChangelog
-        ? activeChangelog.title
-        : tab === 'changelog' ? '更新日志' : '常见问题';
+    const headerTitle = active
+        ? active.title
+        : tab === 'changelog' ? '' : '常见问题';
 
     return (
         <div className="h-full w-full bg-slate-50 flex flex-col font-light">
@@ -166,7 +166,7 @@ const FAQApp: React.FC = () => {
             </div>
 
             {/* Tab switcher (hidden when viewing a specific changelog) */}
-            {!activeChangelog && (
+            {!active && (
                 <div className="shrink-0 bg-white/60 backdrop-blur-md border-b border-slate-200/60 px-4 py-2">
                     <div className="inline-flex bg-slate-100 rounded-full p-1 gap-1">
                         <button
@@ -187,19 +187,19 @@ const FAQApp: React.FC = () => {
                                     : 'text-slate-500 active:scale-95'
                             }`}
                         >
-                            更新日志
+                            
                         </button>
                     </div>
                 </div>
             )}
 
             {/* Content area */}
-            {activeChangelog ? (
+            {active ? (
                 <div className="flex-1 bg-[#faf7f2] overflow-hidden">
                     <iframe
-                        key={activeChangelog.id}
-                        src={activeChangelog.src}
-                        title={activeChangelog.title}
+                        key={active.id}
+                        src={active.src}
+                        title={active.title}
                         className="w-full h-full border-0"
                     />
                 </div>
@@ -263,7 +263,7 @@ const FAQApp: React.FC = () => {
                         {CHANGELOG_ENTRIES.map((entry) => (
                             <button
                                 key={entry.id}
-                                onClick={() => setActiveChangelog(entry)}
+                                onClick={() => setActive(entry)}
                                 className={`w-full text-left bg-gradient-to-br ${entry.accent} border rounded-2xl p-4 shadow-sm active:scale-[0.98] transition-transform`}
                             >
                                 <div className="flex items-start gap-3">
@@ -287,7 +287,7 @@ const FAQApp: React.FC = () => {
                     </div>
 
                     <div className="mt-8 text-center text-[10px] text-slate-400">
-                        小星OS Changelog • 更多版本将在这里陆续归档
+                        小星OS  • 更多版本将在这里陆续归档
                     </div>
                 </div>
             )}
