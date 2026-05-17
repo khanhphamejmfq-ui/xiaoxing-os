@@ -98,7 +98,7 @@ const HandbookApp: React.FC = () => {
     );
     const lifestreamCandidates = useMemo(() => pickLifestreamChars(characters), [characters]);
 
-    // ─── 写入 entry 助手 ────────────────────────────────
+    // ─── 写入 entry 小星 ────────────────────────────────
     const upsertEntry = useCallback(async (date: string, mutate: (e: HandbookEntry) => HandbookEntry) => {
         const existing = await DB.getHandbook(date);
         const base: HandbookEntry = existing || { id: date, date, pages: [], updatedAt: Date.now() };
