@@ -20,7 +20,7 @@ import { resolveMiniMaxApiKey } from '../utils/minimaxApiKey';
 import { normalizeUserImpression } from '../utils/impression';
 import { injectMemoryPalace } from '../utils/memoryPalace/pipeline';
 
-const isOldSullyCharacter = (c: any) => {
+const isOld小星Character = (c: any) => {
   const id = String(c?.id || '').toLowerCase();
   const name = String(c?.name || '').toLowerCase();
   return id.includes('sully') || name === 'sully' || name.includes('sully');
@@ -169,7 +169,7 @@ const Character: React.FC = () => {
     if (editingId && view === 'detail') {
         // Only if formData is not set OR the ID doesn't match
         if (!formData || formData.id !== editingId) {
-            const target = characters.filter(c => !isOldSullyCharacter(c)).find(c => c.id === editingId);
+            const target = characters.filter(c => !isOld小星Character(c)).find(c => c.id === editingId);
             if (target) setFormData(target);
         }
     }
@@ -179,7 +179,7 @@ const Character: React.FC = () => {
   // (e.g. Chat archive calling updateCharacter) so stale formData doesn't overwrite them.
   useEffect(() => {
     if (!editingId || !formData || formData.id !== editingId) return;
-    const latest = characters.filter(c => !isOldSullyCharacter(c)).find(c => c.id === editingId);
+    const latest = characters.filter(c => !isOld小星Character(c)).find(c => c.id === editingId);
     if (!latest) return;
     const latestMemCount = latest.memories?.length ?? 0;
     const localMemCount = formData.memories?.length ?? 0;
@@ -375,7 +375,7 @@ const Character: React.FC = () => {
               addToast(`${year}年${month}月记忆精炼完成`, 'success');
           } else {
               // Switched page - Save to DB directly
-              const currentRefined = characters.filter(c => !isOldSullyCharacter(c)).find(c => c.id === targetId)?.refinedMemories || {};
+              const currentRefined = characters.filter(c => !isOld小星Character(c)).find(c => c.id === targetId)?.refinedMemories || {};
               updateCharacter(targetId, { refinedMemories: { ...currentRefined, [key]: summary } });
               addToast('后台任务完成：记忆已保存到原角色', 'success');
           }
@@ -447,7 +447,7 @@ const Character: React.FC = () => {
               handleChange('memories', [...kept, newFrag]);
           } else {
               // 用户切角色了 —— 直接写回目标角色
-              const currentMems = characters.filter(c => !isOldSullyCharacter(c)).find(c => c.id === targetId)?.memories || [];
+              const currentMems = characters.filter(c => !isOld小星Character(c)).find(c => c.id === targetId)?.memories || [];
               const curKept = currentMems.filter(m => !(m.date === dateStr && (m.mood === 'archive' || !m.mood)));
               updateCharacter(targetId, { memories: [...curKept, newFrag] });
           }
@@ -508,7 +508,7 @@ const Character: React.FC = () => {
                   addToast(`成功导入 ${newMems.length} 条记忆`, 'success'); 
               } else {
                   // Background update
-                  const currentMems = characters.filter(c => !isOldSullyCharacter(c)).find(c => c.id === targetId)?.memories || [];
+                  const currentMems = characters.filter(c => !isOld小星Character(c)).find(c => c.id === targetId)?.memories || [];
                   updateCharacter(targetId, { memories: [...currentMems, ...newMems] });
                   addToast('后台任务完成：导入记忆已保存', 'success');
               }
@@ -615,7 +615,7 @@ const Character: React.FC = () => {
             } else {
                 // Background update
                 if (okCount > 0) {
-                    const currentMems = characters.filter(c => !isOldSullyCharacter(c)).find(c => c.id === targetId)?.memories || [];
+                    const currentMems = characters.filter(c => !isOld小星Character(c)).find(c => c.id === targetId)?.memories || [];
                     updateCharacter(targetId, { memories: [...currentMems, ...newMemories] });
                 }
                 setIsBatchProcessing(false);
@@ -950,7 +950,7 @@ ${isInitialGeneration ? `
            <div className="flex flex-col h-full animate-fade-in">
                {/* INCREASED PADDING TOP HERE */}
                <div className="px-6 pt-16 pb-4 shrink-0 flex items-center justify-between">
-                   <div><h1 className="text-2xl font-light text-slate-800 tracking-tight">神经链接</h1><p className="text-xs text-slate-400 mt-1">已建立 {characters.filter(c => !isOldSullyCharacter(c)).length} 个角色连接</p></div>
+                   <div><h1 className="text-2xl font-light text-slate-800 tracking-tight">神经链接</h1><p className="text-xs text-slate-400 mt-1">已建立 {characters.filter(c => !isOld小星Character(c)).length} 个角色连接</p></div>
                    <div className="flex gap-2">
                         <button onClick={() => cardImportRef.current?.click()} className="p-2 rounded-full bg-white/40 hover:bg-white/80 transition-colors text-slate-600" title="导入角色卡">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
@@ -963,7 +963,7 @@ ${isInitialGeneration ? `
                    </div>
                </div>
                <div className="flex-1 overflow-y-auto px-5 pb-20 no-scrollbar flex flex-col gap-3">
-                   {characters.filter(c => !isOldSullyCharacter(c)).map(char => (
+                   {characters.filter(c => !isOld小星Character(c)).map(char => (
                        <CharacterCard 
                            key={char.id} 
                            char={char} 
