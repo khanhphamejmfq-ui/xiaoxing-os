@@ -185,26 +185,19 @@
 }
 </script>
 
-    <script>
-      // force xiaoxing disclaimer accepted early
-      try { localStorage.setItem('xiaoxingos_disclaimer_accepted','true'); localStorage.setItem('sullyos_disclaimer_accepted','true'); } catch(e) {}
-    </script>
 
-
-    <script>
-      // xiaoxing-final-disclaimer-kill
-      try {
-        localStorage.setItem('xiaoxingos_disclaimer_accepted','true');
-        localStorage.setItem('sullyos_disclaimer_accepted','true');
-        localStorage.setItem('disclaimer_accepted','true');
-        localStorage.setItem('DISCLAIMER_ACCEPTED','true');
-        window.__DISABLE_DISCLAIMER__ = true;
-      } catch(e) {}
-      window.addEventListener('load', function(){
-        setTimeout(function(){
-          try { document.querySelectorAll('div').forEach(function(el){ if((el.innerText||'').includes('免责声明') && (el.innerText||'').includes('继续使用')) el.remove(); }); } catch(e) {}
-        }, 300);
-      });
+    <style id="xiaoxing-modal-killer-style">
+      .announcement-modal,.update-notification-modal,.poster-theme{display:none!important;pointer-events:none!important;}
+    </style>
+    <script id="xiaoxing-modal-killer">
+      (function(){
+        var KEYS=['xiaoxingos_disclaimer_accepted','sullyos_disclaimer_accepted','disclaimer_accepted','DISCLAIMER_ACCEPTED','xiaoxingos_update_2026_04_seen','xiaoxingos_update_2026_05_seen','xiaoxingos_update_2026_05_10_seen','sullyos_update_2026_04_seen','sullyos_update_2026_05_seen','sullyos_update_2026_05_10_seen'];
+        try{KEYS.forEach(function(k){localStorage.setItem(k,'true')})}catch(e){}
+        window.__DISABLE_DISCLAIMER__=true;window.__DISABLE_UPDATE_NOTICE__=true;
+        function bad(t){return t&&(((t.indexOf('免责声明')>=0)&&(t.indexOf('继续使用')>=0||t.indexOf('付费购买')>=0))||t.indexOf('我已知悉')>=0||t.indexOf('更新提示')>=0||t.indexOf('更新日志')>=0||t.indexOf('Changelog')>=0)}
+        function kill(){try{Array.prototype.slice.call(document.querySelectorAll('div,section,aside')).forEach(function(el){var txt=el.innerText||'';if(bad(txt)){var box=el;for(var i=0;i<8&&box.parentElement;i++){var st=getComputedStyle(box);if(st.position==='fixed'||String(box.className||'').indexOf('z-')>=0||box.getAttribute('role')==='dialog')break;box=box.parentElement;}box.remove();}})}catch(e){}}
+        if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',kill);else kill();window.addEventListener('load',kill);setInterval(kill,500);try{new MutationObserver(kill).observe(document.documentElement,{childList:true,subtree:true})}catch(e){}
+      })();
     </script>
 
 </head>
