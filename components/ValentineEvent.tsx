@@ -35,8 +35,8 @@ const VALENTINE_SPRITES: Record<string, string> = {
 };
 
 // localStorage keys
-const VALENTINE_DISMISSED_KEY = 'sullyos_valentine_2026_dismissed';
-const VALENTINE_COMPLETED_KEY = 'sullyos_valentine_2026_completed';
+const VALENTINE_DISMISSED_KEY = 'xiaoxingos_valentine_2026_dismissed';
+const VALENTINE_COMPLETED_KEY = 'xiaoxingos_valentine_2026_completed';
 const VALENTINE_RECORD_KEY = 'valentine_2026';
 
 // ============================================================
@@ -110,16 +110,16 @@ const parseValentineDialogue = (raw: string): ValentineDialogueLine[] => {
     return results;
 };
 
-/** 判断是否为 Sully 角色 */
-const isSullyChar = (char?: CharacterProfile): boolean => {
+/** 判断是否为 小星 角色 */
+const is小星Char = (char?: CharacterProfile): boolean => {
     if (!char) return false;
-    return char.name.toLowerCase().includes('sully');
+    return char.name.toLowerCase().includes('xiaoxing');
 };
 
 /** 获取角色实际可用的表情列表（用于 prompt） */
 const getAvailableEmotions = (char: CharacterProfile): string[] => {
-    if (isSullyChar(char)) {
-        // Sully 使用情人节专属表情
+    if (is小星Char(char)) {
+        // 小星 使用情人节专属表情
         return Object.keys(VALENTINE_SPRITES);
     }
     // 其他角色：从 sprites 配置 + customDateSprites 获取实际可用表情
@@ -139,10 +139,10 @@ const getSpriteForEmotion = (emotion: string, char?: CharacterProfile): { type: 
         return { type: 'emoji', value: VALENTINE_SPRITES['normal'] };
     }
 
-    const isSully = isSullyChar(char);
+    const is小星 = is小星Char(char);
 
-    if (isSully) {
-        // Sully: 优先情人节专属立绘占位，未来会替换为图床URL
+    if (is小星) {
+        // 小星: 优先情人节专属立绘占位，未来会替换为图床URL
         const valentineMap: Record<string, string> = {
             happy: 'happy', sad: 'sad', normal: 'normal',
             angry: 'angry', shy: 'shy', love: 'love',
@@ -158,7 +158,7 @@ const getSpriteForEmotion = (emotion: string, char?: CharacterProfile): { type: 
         return { type: 'emoji', value: spriteUrl || VALENTINE_SPRITES['normal'] };
     }
 
-    // 非 Sully 角色：使用角色自己的见面立绘（和 DateApp 一致）
+    // 非 小星 角色：使用角色自己的见面立绘（和 DateApp 一致）
     if (char.sprites) {
         const sprite = char.sprites[emotion] || char.sprites['normal'];
         if (sprite) {
@@ -190,7 +190,7 @@ export const ValentinePopup: React.FC<ValentinePopupProps> = ({ onView, onDismis
                 {/* Header */}
                 <div className="pt-8 pb-4 px-6 text-center relative">
                     <div className="text-4xl mb-3 animate-bounce">💌</div>
-                    <h2 className="text-lg font-extrabold text-slate-800">Sully好像有话对你说？</h2>
+                    <h2 className="text-lg font-extrabold text-slate-800">小星好像有话对你说？</h2>
                     <p className="text-[11px] text-pink-400 mt-1.5 font-medium">2026 Valentine's Day Special</p>
                     <p className="text-[10px] text-slate-400 mt-2 leading-relaxed">想听其他角色的心声？可以在桌面「特别时光」中找到</p>
                 </div>
@@ -1119,9 +1119,9 @@ export const ValentineController: React.FC<ValentineControllerProps> = ({ onClos
     const { characters } = useOS();
     const [stage, setStage] = useState<'popup' | 'api' | 'session'>('popup');
 
-    // 找到 Sully 角色ID（弹窗直接进Sully）
-    const sullyChar = characters.find(c => isSullyChar(c));
-    const sullyId = sullyChar?.id || characters[0]?.id || '';
+    // 找到 小星 角色ID（弹窗直接进小星）
+    const xiaoxingChar = characters.find(c => is小星Char(c));
+    const xiaoxingId = xiaoxingChar?.id || characters[0]?.id || '';
 
     const handleDismiss = () => {
         try { localStorage.setItem(VALENTINE_DISMISSED_KEY, Date.now().toString()); } catch { /* */ }
@@ -1147,8 +1147,8 @@ export const ValentineController: React.FC<ValentineControllerProps> = ({ onClos
         );
     }
 
-    // 从弹窗进入时，直接给 Sully 的 charId，跳过角色选择
-    return <ValentineSession charId={sullyId} onClose={onClose} />;
+    // 从弹窗进入时，直接给 小星 的 charId，跳过角色选择
+    return <ValentineSession charId={xiaoxingId} onClose={onClose} />;
 };
 
 // ============================================================
