@@ -317,7 +317,7 @@ ${chatBlock}
 ${worldBlock}
 ---
 
-你是一个 galgame 游戏助手。在"攻略本"游戏中，${char.name}正在尝试攻略${user.name}。
+你是一个 galgame 游戏小星。在"攻略本"游戏中，${char.name}正在尝试攻略${user.name}。
 需要帮忙生成下一回合的**剧情场景**和**3个选项**。
 
 ${scenarioHint ? `当前世界观/场景设定: ${scenarioHint}` : ''}${directionBlock}
