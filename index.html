@@ -190,6 +190,23 @@
       try { localStorage.setItem('xiaoxingos_disclaimer_accepted','true'); localStorage.setItem('sullyos_disclaimer_accepted','true'); } catch(e) {}
     </script>
 
+
+    <script>
+      // xiaoxing-final-disclaimer-kill
+      try {
+        localStorage.setItem('xiaoxingos_disclaimer_accepted','true');
+        localStorage.setItem('sullyos_disclaimer_accepted','true');
+        localStorage.setItem('disclaimer_accepted','true');
+        localStorage.setItem('DISCLAIMER_ACCEPTED','true');
+        window.__DISABLE_DISCLAIMER__ = true;
+      } catch(e) {}
+      window.addEventListener('load', function(){
+        setTimeout(function(){
+          try { document.querySelectorAll('div').forEach(function(el){ if((el.innerText||'').includes('免责声明') && (el.innerText||'').includes('继续使用')) el.remove(); }); } catch(e) {}
+        }, 300);
+      });
+    </script>
+
 </head>
   <body>
     <div id="root"></div>
