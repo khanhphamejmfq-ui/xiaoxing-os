@@ -11,12 +11,12 @@ import { useOS } from '../context/OSContext';
 import { AppID } from '../types';
 
 // 历史 key —— 保留, 让老用户的"已看过"状态延续到本月新弹窗判断里
-export const UPDATE_NOTIFICATION_KEY = 'sullyos_update_2026_04_seen';
-export const UPDATE_NOTIFICATION_KEY_2026_05 = 'sullyos_update_2026_05_seen';
+export const UPDATE_NOTIFICATION_KEY = 'xiaoxingos_update_2026_04_seen';
+export const UPDATE_NOTIFICATION_KEY_2026_05 = 'xiaoxingos_update_2026_05_seen';
 // 本次小更新 key —— 5.10「心象」上线
-export const UPDATE_NOTIFICATION_KEY_2026_05_10 = 'sullyos_update_2026_05_10_seen';
+export const UPDATE_NOTIFICATION_KEY_2026_05_10 = 'xiaoxingos_update_2026_05_10_seen';
 
-export const FAQ_TARGET_SECTION_KEY = 'sullyos_faq_target_section';
+export const FAQ_TARGET_SECTION_KEY = 'xiaoxingos_faq_target_section';
 export const CHANGELOG_2026_04 = 'changelog-2026-04';
 export const CHANGELOG_2026_05 = 'changelog-2026-05';
 export const CHANGELOG_2026_05_10 = 'changelog-2026-05-10';
