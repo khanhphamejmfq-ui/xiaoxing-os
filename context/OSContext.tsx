@@ -450,6 +450,16 @@ Personality: 软萌、粘人、爱撒娇、活泼、温柔
 // Fallback for factory reset (empty db)
 const initialCharacter = xiaoxingV2;
 
+const sanitizeXiaoxingCharacters = (chars: CharacterProfile[]): CharacterProfile[] => {
+  const cleaned = (Array.isArray(chars) ? chars : []).filter((c) => {
+    const id = String(c?.id || '').toLowerCase();
+    const name = String(c?.name || '').toLowerCase();
+    return !(id.includes('sully') || name === 'sully' || name.includes('sully'));
+  });
+  const hasXiaoxing = cleaned.some((c) => String(c?.id || '') === 'preset-xiaoxing-v2' || String(c?.name || '') === '小星');
+  return hasXiaoxing ? cleaned : [xiaoxingV2, ...cleaned];
+};
+
 const OSContext = createContext<OSContextType | undefined>(undefined);
 
 export const OSProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
