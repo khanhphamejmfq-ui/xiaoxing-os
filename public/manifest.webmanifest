@@ -2,8 +2,8 @@
   "short_name": "小星",
   "name": "小星OS",
   "display": "standalone",
-  "theme_color": "#0f1115",
-  "background_color": "#0f1115",
+  "theme_color": "#fff4cc",
+  "background_color": "#fff7d6",
   "start_url": "./",
   "scope": "./",
   "icons": [
