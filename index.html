@@ -238,6 +238,61 @@
       })();
     </script>
 
+<!-- xiaoxing popup killer start -->
+<script>
+(function(){
+  try {
+    var keys = [
+      'xiaoxingos_disclaimer_accepted','sullyos_disclaimer_accepted',
+      'xiaoxingos_update_seen','xiaoxingos_update_2026_05_seen','xiaoxingos_update_2026_05_10_seen',
+      'sullyos_update_2026_04_seen','sullyos_update_2026_05_seen','sullyos_update_2026_05_10_seen',
+      'xiaoxing_update_hidden_forever','sully_update_hidden_forever'
+    ];
+    keys.forEach(function(k){ localStorage.setItem(k,'true'); sessionStorage.setItem(k,'true'); });
+  } catch(e) {}
+  function badText(t){
+    if(!t) return false;
+    t = String(t).replace(/\s+/g,'');
+    return (
+      (t.indexOf('免责声明')>=0 && (t.indexOf('继续使用')>=0 || t.indexOf('我已知悉')>=0 || t.indexOf('倒卖诈骗')>=0)) ||
+      (t.indexOf('小更新提醒')>=0) ||
+      (t.indexOf('更新提示')>=0) ||
+      (t.indexOf('查看5月10日小更新')>=0) ||
+      (t.indexOf('心象')>=0 && t.indexOf('上线')>=0 && t.indexOf('更新')>=0) ||
+      (t.indexOf('Changelog')>=0 && t.indexOf('更新')>=0)
+    );
+  }
+  function removePopup(){
+    try{
+      var all=[].slice.call(document.body ? document.body.querySelectorAll('*') : []);
+      for(var i=0;i<all.length;i++){
+        var el=all[i];
+        var txt=el.innerText || el.textContent || '';
+        if(!badText(txt)) continue;
+        var target=el;
+        for(var j=0;j<10 && target && target.parentElement;j++){
+          var cs=getComputedStyle(target);
+          var r=target.getBoundingClientRect();
+          var covers=(cs.position==='fixed'||cs.position==='absolute') && r.width>window.innerWidth*0.55 && r.height>window.innerHeight*0.25;
+          if(covers || (target.className && String(target.className).indexOf('z-')>=0)) break;
+          target=target.parentElement;
+        }
+        if(target && target !== document.body && target !== document.documentElement){ target.remove(); return true; }
+        el.remove(); return true;
+      }
+    }catch(e){}
+    return false;
+  }
+  var css=document.createElement('style');
+  css.textContent='[data-xiaoxing-force-hide], .xiaoxing-force-hide{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important;}';
+  document.documentElement.appendChild(css);
+  var obs=new MutationObserver(function(){ removePopup(); });
+  function start(){ if(document.body){ obs.observe(document.body,{childList:true,subtree:true,characterData:true}); removePopup(); } }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',start); else start();
+  setInterval(removePopup,200);
+})();
+</script>
+<!-- xiaoxing popup killer end -->
 </head>
   <body>
     <div id="root"></div>
