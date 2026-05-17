@@ -13,6 +13,12 @@ import { Door, Sparkle, Image, GearSix, Camera } from '@phosphor-icons/react';
 import { FURNITURE_ICONS } from '../utils/furnitureIcons';
 import PixelHomeView from './pixelHome/PixelHomeView';
 
+const isOldSullyCharacter = (c: any) => {
+  const id = String(c?.id || '').toLowerCase();
+  const name = String(c?.name || '').toLowerCase();
+  return id.includes('sully') || name === 'sully' || name.includes('sully');
+};
+
 const TWEMOJI_BASE = 'https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/72x72';
 const twemojiUrl = (codepoint: string) => `${TWEMOJI_BASE}/${codepoint}.png`;
 
@@ -287,7 +293,7 @@ const RoomApp: React.FC = () => {
     const actorInputRef = useRef<HTMLInputElement>(null); 
     const customItemInputRef = useRef<HTMLInputElement>(null);
 
-    const char = characters.find(c => c.id === activeCharacterId);
+    const char = characters.filter(c => !isOldSullyCharacter(c)).find(c => c.id === activeCharacterId);
 
     // Custom Item Library State (new: unified with visibility)
     type CustomAsset = { id: string; name: string; image: string; defaultScale: number; description?: string; visibility: 'public' | 'character'; assignedCharIds?: string[] };
@@ -1087,7 +1093,7 @@ ${!shouldGenerateTodo ? `(系统: 今日待办已存在，无需生成，请忽�
                     </div>
                 </div>
                <div className="p-6 grid grid-cols-2 gap-4 overflow-y-auto pb-20 no-scrollbar">
-    {characters.map(c => (
+    {characters.filter(c => !isOldSullyCharacter(c)).map(c => (
         <div key={c.id} onClick={() => {
             if (homeTab === 'pixelHome') {
                 setActiveCharacterId(c.id);
@@ -1400,7 +1406,7 @@ ${!shouldGenerateTodo ? `(系统: 今日待办已存在，无需生成，请忽�
                             <div>
                                 <label className="text-[10px] font-bold text-slate-400 block mb-1">指定角色（可多选）</label>
                                 <div className="flex flex-wrap gap-2">
-                                    {characters.map(c => (
+                                    {characters.filter(c => !isOldSullyCharacter(c)).map(c => (
                                         <button key={c.id} onClick={() => setEditAssignedCharIds(prev => prev.includes(c.id) ? prev.filter(id => id !== c.id) : [...prev, c.id])}
                                             className={`px-3 py-1.5 rounded-full text-xs font-bold border transition-colors ${editAssignedCharIds.includes(c.id) ? 'bg-blue-100 border-blue-300 text-blue-600' : 'bg-slate-50 border-slate-200 text-slate-400'}`}
                                         >
