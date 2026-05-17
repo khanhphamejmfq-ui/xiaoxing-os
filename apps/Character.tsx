@@ -796,7 +796,7 @@ ${isInitialGeneration ? `
       const exportData: CharacterExportData = {
           ...cardProps,
           version: 1,
-          type: 'sully_character_card'
+          type: 'xiaoxing_character_card'
       };
 
       if (formData.bubbleStyle) {
@@ -879,7 +879,7 @@ ${isInitialGeneration ? `
               const json = ev.target?.result as string;
               const data: CharacterExportData = JSON.parse(json);
               
-              if (data.type !== 'sully_character_card') {
+              if (data.type !== 'xiaoxing_character_card') {
                   throw new Error('无效的角色卡文件');
               }
 
