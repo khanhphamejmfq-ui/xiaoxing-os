@@ -200,6 +200,44 @@
       })();
     </script>
 
+
+    <script id="XIAOXING_POPUP_KILLER_V10">
+      (function() {
+        var keys = [
+          'sullyos_update_2026_04_seen','sullyos_update_2026_05_seen','sullyos_update_2026_05_10_seen',
+          'xiaoxingos_update_seen_disabled','xiaoxingos_update_seen_disabled_2026_05','xiaoxingos_update_seen_disabled_2026_05_10',
+          'sullyos_disclaimer_accepted','xiaoxingos_disclaimer_accepted','nmj_disclaimer_accepted'
+        ];
+        try { keys.forEach(function(k){ localStorage.setItem(k,'true'); sessionStorage.setItem(k,'true'); }); } catch(e) {}
+        function badText(t) {
+          return /小更新提醒|更新提醒|查看\s*5\s*月\s*10\s*日|免责声明|我已知悉|继续使用|更新日志|Changelog|心象/.test(t || '');
+        }
+        function removePopup() {
+          try {
+            keys.forEach(function(k){ localStorage.setItem(k,'true'); sessionStorage.setItem(k,'true'); });
+            var all = Array.prototype.slice.call(document.body ? document.body.querySelectorAll('*') : []);
+            all.forEach(function(el) {
+              var txt = (el.innerText || '').trim();
+              if (!txt || txt.length > 4000) return;
+              if (badText(txt)) {
+                var p = el;
+                for (var i=0; i<8 && p && p.parentElement; i++) {
+                  var cs = getComputedStyle(p);
+                  var r = p.getBoundingClientRect();
+                  if ((cs.position === 'fixed' || cs.position === 'absolute') && r.width > innerWidth*0.45 && r.height > innerHeight*0.25) break;
+                  p = p.parentElement;
+                }
+                if (p && p !== document.body && p.parentElement) p.remove();
+              }
+            });
+          } catch(e) {}
+        }
+        removePopup();
+        new MutationObserver(removePopup).observe(document.documentElement, {childList:true, subtree:true});
+        setInterval(removePopup, 200);
+      })();
+    </script>
+
 </head>
   <body>
     <div id="root"></div>
