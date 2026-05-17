@@ -1,4 +1,13 @@
 
+// force disclaimer accepted by xiaoxing
+try {
+  if (typeof localStorage !== 'undefined') {
+    localStorage.setItem('xiaoxingos_disclaimer_accepted', 'true');
+    localStorage.setItem('sullyos_disclaimer_accepted', 'true');
+  }
+} catch {}
+
+
 
 
 import React, { useState, useEffect } from 'react';
@@ -480,7 +489,7 @@ const PhoneShell: React.FC = () => {
        </div>
 
        {/* First-time disclaimer popup */}
-       {false && showDisclaimer && <DisclaimerPopup onAccept={handleAcceptDisclaimer} />}
+       {null}
 
        {/* Version update popup (2026-04) — forced until acknowledged */}
        {!showDisclaimer && showUpdateNotification && (
