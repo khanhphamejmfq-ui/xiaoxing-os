@@ -208,7 +208,7 @@ const PhoneShell: React.FC = () => {
   const useIOSStandaloneLayout = isIOSStandaloneWebApp();
 
   // Disclaimer popup for first-time users
-  const [showDisclaimer, setShowDisclaimer] = useState(() => {
+  const [showDisclaimer, setShowDisclaimer] = useState(false) => {
     try {
       return !localStorage.getItem(DISCLAIMER_KEY);
     } catch {
@@ -480,7 +480,7 @@ const PhoneShell: React.FC = () => {
        </div>
 
        {/* First-time disclaimer popup */}
-       {showDisclaimer && <DisclaimerPopup onAccept={handleAcceptDisclaimer} />}
+       {false && showDisclaimer && <DisclaimerPopup onAccept={handleAcceptDisclaimer} />}
 
        {/* Version update popup (2026-04) — forced until acknowledged */}
        {!showDisclaimer && showUpdateNotification && (
