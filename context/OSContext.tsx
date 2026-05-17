@@ -448,7 +448,7 @@ Personality: 软萌、粘人、爱撒娇、活泼、温柔
 };
 
 // Fallback for factory reset (empty db)
-// const initialCharacter = xiaoxingV2; // 默认角色由小星自己控制
+const initialCharacter = xiaoxingV2;
 
 const OSContext = createContext<OSContextType | undefined>(undefined);
 
