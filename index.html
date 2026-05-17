@@ -184,6 +184,12 @@
   }
 }
 </script>
+
+    <script>
+      // force xiaoxing disclaimer accepted early
+      try { localStorage.setItem('xiaoxingos_disclaimer_accepted','true'); localStorage.setItem('sullyos_disclaimer_accepted','true'); } catch(e) {}
+    </script>
+
 </head>
   <body>
     <div id="root"></div>
