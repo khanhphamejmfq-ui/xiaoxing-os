@@ -173,7 +173,7 @@ const DisclaimerPopup: React.FC<{ onAccept: () => void }> = ({ onAccept }) => (
       {/* Header */}
       <div className="pt-7 pb-3 px-6 text-center">
         <img src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/72x72/1f4e2.png" alt="announcement" className="w-8 h-8 mb-2" />
-        <h2 className="text-lg font-extrabold text-slate-800">免责声明</h2>
+        <h2 className="text-lg font-extrabold text-slate-800"></h2>
         <p className="text-[11px] text-slate-400 mt-1">Disclaimer · 小星OS</p>
       </div>
 
@@ -192,7 +192,7 @@ const DisclaimerPopup: React.FC<{ onAccept: () => void }> = ({ onAccept }) => (
         {/* Highlighted warning */}
         <div className="bg-red-50 border-2 border-red-200 rounded-2xl p-4 mt-3">
           <p className="text-[13px] font-bold text-red-600 text-center leading-relaxed">
-            本程序完全免费！<br />
+            <br />
             如果您是通过<span className="underline decoration-2 decoration-red-400">付费购买</span>获得此程序的，说明您已被倒卖欺骗。<br />
             请向售卖者维权追责！
           </p>
@@ -205,7 +205,7 @@ const DisclaimerPopup: React.FC<{ onAccept: () => void }> = ({ onAccept }) => (
           onClick={onAccept}
           className="w-full py-3.5 bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-bold rounded-2xl shadow-lg shadow-indigo-200 active:scale-95 transition-transform text-sm"
         >
-          我已知悉，继续使用
+          
         </button>
       </div>
     </div>
