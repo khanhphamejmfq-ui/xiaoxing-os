@@ -2468,10 +2468,10 @@ const Chat: React.FC = () => {
             <Modal
                 isOpen={personalityRescue.open}
                 title={
-                    personalityRescue.open && personalityRescue.phase === 'rescuing' ? '糯米鸡抢救中…' :
+                    personalityRescue.open && personalityRescue.phase === 'rescuing' ? '小星抢救中…' :
                     personalityRescue.open && personalityRescue.phase === 'done' ? '抢救完成！' :
                     personalityRescue.open && personalityRescue.phase === 'failed' ? '抢救失败' :
-                    '糯米鸡抢救中…'
+                    '小星抢救中…'
                 }
                 onClose={() => {
                     // rescuing 阶段不给关，必须看到结果；其它阶段允许关闭
@@ -2492,7 +2492,7 @@ const Chat: React.FC = () => {
                 {personalityRescue.open && personalityRescue.phase === 'rescuing' && (
                     <div className="space-y-3 py-2">
                         <p className="text-sm text-slate-600 leading-relaxed text-center">
-                            角色的后台有点 bug，糯米鸡抢救一下，马上就好 ✨
+                            角色的后台有点 bug，小星抢救一下，马上就好 ✨
                         </p>
                         <p className="text-xs text-slate-400 text-center">
                             正在重新分析 <span className="font-semibold text-slate-600">{personalityRescue.charName}</span> 的认知风格…
@@ -2526,7 +2526,7 @@ const Chat: React.FC = () => {
                             </div>
                             {personalityRescue.result.reasoning && (
                                 <p className="text-xs text-slate-500 leading-relaxed px-1">
-                                    <span className="text-slate-400">糯米鸡的判断：</span>
+                                    <span className="text-slate-400">小星的判断：</span>
                                     {personalityRescue.result.reasoning}
                                 </p>
                             )}
@@ -2536,7 +2536,7 @@ const Chat: React.FC = () => {
                 {personalityRescue.open && personalityRescue.phase === 'failed' && (
                     <div className="space-y-3 py-2">
                         <p className="text-sm text-slate-600 text-center">
-                            糯米鸡也没救回来 😢
+                            小星也没救回来 😢
                         </p>
                         <p className="text-xs text-slate-400 leading-relaxed text-center">
                             下次打开聊天再试一次，或去记忆宫殿检查一下副 API 配置。
