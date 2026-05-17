@@ -199,7 +199,7 @@ const ActiveMsgGlobalSettingsModal: React.FC<ActiveMsgGlobalSettingsModalProps> 
         <div className="bg-amber-50 border border-amber-100 rounded-2xl p-4 text-xs leading-relaxed text-amber-700 space-y-2">
           <div className="font-bold text-amber-800">风险说明</div>
           <p>开了 2.0 以后，主动消息内容、提示词、相关配置，都会进入你填写的 Neon 数据库。</p>
-          <p>数据库管理员有机会看到这些内容。除此之外，按这套信任模型，项目维护者也就是糯米鸡，逻辑上同样属于有权限碰到这些数据的人。</p>
+          <p>数据库管理员有机会看到这些内容。除此之外，按这套信任模型，项目维护者也就是小星，逻辑上同样属于有权限碰到这些数据的人。</p>
           <p>如果你不接受这一点，就不要开 2.0，也不要把自己的 API Key、敏感提示词、私密内容放进去。</p>
           <p>项目不会额外偷偷接一个中心服务器；它走的还是你自己的库。但只要数据进库，就默认数据库管理员和项目维护者是你需要信任的人。</p>
         </div>
